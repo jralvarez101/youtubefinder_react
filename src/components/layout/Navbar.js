@@ -8,7 +8,7 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #79a3b1;
+  background-color: #4a525e;
   padding: 5px 20px;
   color: #fcf8ec;
   position: relative;
@@ -40,8 +40,6 @@ const Ul = styled.ul`
     position: absolute;
     visibility: ${({ menuIconClicked }) =>
       menuIconClicked ? `visible` : `hidden`};
-    /* left: 100%; */
-    /* left: -50%; */
   }
 
   ${({ menuIconClicked }) =>
@@ -52,10 +50,6 @@ const Ul = styled.ul`
       top: 50px;
       visibility: visible;
       left: 80px;
-
-      /* position: absolute; */
-      /* left: -100%; */
-      /* align-items: center; */
     `};
 `;
 
