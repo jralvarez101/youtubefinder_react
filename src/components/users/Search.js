@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Alert from "../layout/Alert";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -29,8 +30,9 @@ const SearchButton = styled.input`
 `;
 
 // Currently setting the search bar
-function Search({ handleSearch }) {
+function Search({ getSearchResults }) {
   const [searchText, setSearchText] = useState("");
+  const [alertMessage, setAlertMessage] = useState(null);
 
   const onChange = (e) => {
     setSearchText(e.target.value);
@@ -39,17 +41,30 @@ function Search({ handleSearch }) {
   // With this function we are passing a prop up one component by calling a function that is on the Home Page.
   const onSubmit = (e) => {
     e.preventDefault();
-    handleSearch(searchText);
+    if (searchText === "") {
+      setAlert("Please enter something");
+    } else {
+      getSearchResults(searchText);
+      setSearchText("");
+    }
+  };
+
+  // Set Alert
+  const setAlert = (msg) => {
+    setAlertMessage(msg);
+    setTimeout(() => {
+      setAlertMessage(null);
+    }, 5000);
   };
 
   return (
     <Container>
+      <Alert alertMessage={alertMessage} />
       <form>
         <SearchBar
           type="text"
           name="text"
           placeholder="Please Enter Channel Name...."
-          // The value of the search input is attached to the state and with onChange you change the state
           value={searchText}
           onChange={onChange}
         />

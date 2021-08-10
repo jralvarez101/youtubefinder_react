@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { BrowserRouter as Router, withRouter } from "react-router-dom";
+
 import LeftColumn from "./LeftColumn";
 import RightColumn from "./RightColumn";
 
@@ -51,7 +53,8 @@ const Column2 = styled.div`
   }
 `;
 
-function User() {
+function User(props) {
+  console.log("chanel name: ", props.match.params.channelName);
   return (
     <Container>
       <Card>
@@ -66,4 +69,4 @@ function User() {
   );
 }
 
-export default User;
+export default withRouter(User);

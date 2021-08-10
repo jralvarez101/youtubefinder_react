@@ -42,8 +42,6 @@ const Button = styled.button`
 `;
 
 function UserItem({ searchResultList }) {
-  console.log(searchResultList);
-
   return (
     <Container>
       <Card>
