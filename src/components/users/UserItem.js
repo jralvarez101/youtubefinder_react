@@ -1,14 +1,25 @@
-import React, { useState, useEffect, Fragment } from "react";
-import axios from "axios";
+import React, { Fragment } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+
+const Container = styled.div`
+  max-width: 1100px;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 2rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+`;
 
 const Card = styled.div`
   padding: 1rem;
   border: #ccc 1px dotted;
   margin: 0.7rem 0;
   text-align: center;
-  max-width: 25%;
+  width: 35%;
+  @media (max-width: 425px) {
+    min-width: 90%;
+  }
 `;
 
 const Img = styled.img`
@@ -30,30 +41,22 @@ const Button = styled.button`
   margin: 1rem 0;
 `;
 
-function UserItem() {
-  const [videoData, setVideoData] = useState([]);
-
-  useEffect(() => {
-    const fetchYoutubeChannel = async () => {
-      const response = await axios.get(
-        "https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&forUsername=GoogleDevelopers&key=AIzaSyDkr4Qsz7NnrltVvvJO3O1mw2Jnr7__jdU"
-      );
-      console.log(response.data);
-      setVideoData(response?.data?.items ?? []);
-    };
-    fetchYoutubeChannel();
-  }, []);
+function UserItem({ searchResultList }) {
+  console.log(searchResultList);
 
   return (
-    <Card>
-      {videoData.map((data) => (
-        <Fragment key={data.id}>
-          <Img src={data.snippet.thumbnails.default.url} alt="thumbnail" />
-          <h3> {data.snippet.title}</h3>
-          <Button>See More</Button>
-        </Fragment>
-      ))}
-    </Card>
+    <Container>
+      <Card>
+        {searchResultList.map((data) => (
+          <Fragment key={data.id}>
+            <Img src={data.snippet.thumbnails.default.url} alt="thumbnail" />
+            <h3> {data.snippet.title}</h3>
+            <p>{data.snippet.description}</p>
+            <Button>See More</Button>
+          </Fragment>
+        ))}
+      </Card>
+    </Container>
   );
 }
 

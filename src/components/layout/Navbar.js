@@ -9,7 +9,7 @@ const Nav = styled.nav`
   align-items: center;
   justify-content: space-between;
   background-color: #4a525e;
-  padding: 5px 20px;
+  padding: 0px 20px;
   color: #fcf8ec;
   position: relative;
   ${({ menuIconClicked }) =>
@@ -28,9 +28,13 @@ const H1 = styled.h1`
 `;
 
 const Li = styled.li`
-  list-style-type: none;
   margin-left: 15px;
+  list-style: none;
+  color: white;
   margin-top: ${({ menuIconClicked }) => (menuIconClicked ? `15px` : `0`)};
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const Ul = styled.ul`
@@ -78,14 +82,12 @@ function Navbar() {
         <div>YouTube Finder</div>
       </H1>
       <Ul menuIconClicked={menuIconClicked}>
-        <Li menuIconClicked={menuIconClicked}>
-          {/* <Link to="/">Home</Link> */}
-          Home
-        </Li>
-        <Li menuIconClicked={menuIconClicked}>
-          {/* <Link to="/about"> About</Link> */}
-          About
-        </Li>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <Li menuIconClicked={menuIconClicked}>Home</Li>
+        </Link>
+        <Link to="/about" style={{ textDecoration: "none" }}>
+          <Li menuIconClicked={menuIconClicked}>About</Li>
+        </Link>
       </Ul>
       <ToggleWrapper
         onClick={toggleNavigation}
