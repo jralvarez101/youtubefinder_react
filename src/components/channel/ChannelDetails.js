@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { BrowserRouter as Router, withRouter } from "react-router-dom";
-
+import axios from "axios";
+import { withRouter } from "react-router-dom";
 import LeftColumn from "./LeftColumn";
 import RightColumn from "./RightColumn";
 
@@ -54,15 +54,30 @@ const Column2 = styled.div`
 `;
 
 function User(props) {
-  console.log("chanel name: ", props.match.params.channelName);
+  const channelID = props.match.params.channelID;
+  const [channelDetailsResult, setChannelDetailsResult] = useState({});
+
+  // Get Search Results List
+  useEffect(() => {
+    const getChannelDetailsResults = async () => {
+      const res = await axios.get(
+        `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelID}&key=${process.env.REACT_APP_YOUTUBE_API}`
+      );
+      const [firstItem] = res?.data?.items ?? [];
+      setChannelDetailsResult(firstItem ?? {});
+    };
+    getChannelDetailsResults();
+  }, [channelID]);
+
+  console.log("channelDetailsResult: ", channelDetailsResult);
   return (
     <Container>
       <Card>
         <Column1>
-          <LeftColumn />
+          <LeftColumn channelDetailsResult={channelDetailsResult} />
         </Column1>
         <Column2>
-          <RightColumn />
+          <RightColumn channelDetailsResult={channelDetailsResult} />
         </Column2>
       </Card>
     </Container>

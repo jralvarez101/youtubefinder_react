@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
+import { withRouter, generatePath } from "react-router-dom";
 import styled from "styled-components";
+import { ROUTES } from "../../config/constants";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -41,7 +43,18 @@ const Button = styled.button`
   margin: 1rem 0;
 `;
 
-function UserItem({ searchResultList }) {
+function UserItem(props) {
+  const { searchResultList, history } = props;
+
+  console.log("user item: ", props);
+
+  const navigateToChannelDetail = (channelID) => {
+    const channelDetailsRoute = generatePath(ROUTES.CHANNEL_DETAILS, {
+      channelID,
+    });
+
+    history.push(channelDetailsRoute);
+  };
   return (
     <Container>
       <Card>
@@ -50,7 +63,9 @@ function UserItem({ searchResultList }) {
             <Img src={data.snippet.thumbnails.default.url} alt="thumbnail" />
             <h3> {data.snippet.title}</h3>
             <p>{data.snippet.description}</p>
-            <Button>See More</Button>
+            <Button onClick={() => navigateToChannelDetail(data.id)}>
+              See More
+            </Button>
           </Fragment>
         ))}
       </Card>
@@ -58,4 +73,4 @@ function UserItem({ searchResultList }) {
   );
 }
 
-export default UserItem;
+export default withRouter(UserItem);
