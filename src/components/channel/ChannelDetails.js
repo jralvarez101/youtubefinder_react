@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import LeftColumn from "./LeftColumn";
 import RightColumn from "./RightColumn";
+import Spinner from "../layout/Spinner";
+import GoBackButton from "../layout/GoBackButton";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -56,31 +58,47 @@ const Column2 = styled.div`
 function User(props) {
   const channelID = props.match.params.channelID;
   const [channelDetailsResult, setChannelDetailsResult] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   // Get Search Results List
   useEffect(() => {
     const getChannelDetailsResults = async () => {
+      setIsLoading(true);
       const res = await axios.get(
         `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelID}&key=${process.env.REACT_APP_YOUTUBE_API}`
       );
       const [firstItem] = res?.data?.items ?? [];
       setChannelDetailsResult(firstItem ?? {});
+      setIsLoading(false);
     };
     getChannelDetailsResults();
   }, [channelID]);
 
+  const hasSearchResults = channelDetailsResult.length > 0;
+
+  console.log(hasSearchResults);
+
   console.log("channelDetailsResult: ", channelDetailsResult);
   return (
-    <Container>
-      <Card>
-        <Column1>
-          <LeftColumn channelDetailsResult={channelDetailsResult} />
-        </Column1>
-        <Column2>
-          <RightColumn channelDetailsResult={channelDetailsResult} />
-        </Column2>
-      </Card>
-    </Container>
+    <Fragment>
+      <GoBackButton />
+      <Container>
+        <Card>
+          <Column1>
+            {isLoading && <Spinner />}
+            {!hasSearchResults && (
+              <LeftColumn channelDetailsResult={channelDetailsResult} />
+            )}
+          </Column1>
+          <Column2>
+            {isLoading && <Spinner />}
+            {!hasSearchResults && (
+              <RightColumn channelDetailsResult={channelDetailsResult} />
+            )}
+          </Column2>
+        </Card>
+      </Container>
+    </Fragment>
   );
 }
 

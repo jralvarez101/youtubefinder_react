@@ -14,6 +14,7 @@ const Li = styled.li`
 
 const Description = styled.p`
   margin-left: 2.3rem;
+  line-height: 28px;
 `;
 
 function RightColumn(props) {

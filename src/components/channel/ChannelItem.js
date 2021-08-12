@@ -46,8 +46,6 @@ const Button = styled.button`
 function UserItem(props) {
   const { searchResultList, history } = props;
 
-  console.log("user item: ", props);
-
   const navigateToChannelDetail = (channelID) => {
     const channelDetailsRoute = generatePath(ROUTES.CHANNEL_DETAILS, {
       channelID,
