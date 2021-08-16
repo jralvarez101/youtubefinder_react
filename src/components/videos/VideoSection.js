@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import spinner from "../layout/spinner.gif";
 
 const Container = styled.div`
   max-width: 1100px;
@@ -23,7 +24,16 @@ const VideoContainer = styled.div`
 `;
 
 const Iframe = styled.iframe`
-  padding: 0.2rem;
+  width: 100%;
+  background: transparent;
+`;
+
+const Loader = styled.div`
+  background-image: url(${spinner});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0.3rem;
   @media (min-width: 1024px) {
     width: 19%;
   }
@@ -36,17 +46,19 @@ function VideoSection(props) {
   return (
     <Container>
       <VideoContainer>
-        <h1>Top 10 Videos</h1>
+        <h1>Top 10 Videos for this Channel!</h1>
         <VideoContainer>
           {videoListId.map((videoId) => (
-            <Iframe
-              key={videoId}
-              src={`https://www.youtube.com/embed/${videoId}`}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></Iframe>
+            <Loader>
+              <Iframe
+                key={videoId}
+                src={`https://www.youtube.com/embed/${videoId}`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></Iframe>
+            </Loader>
           ))}
         </VideoContainer>
       </VideoContainer>
