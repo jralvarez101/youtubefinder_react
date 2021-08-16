@@ -77,10 +77,12 @@ function Navbar() {
 
   return (
     <Nav menuIconClicked={menuIconClicked}>
-      <H1>
-        <FaVideo />
-        <div>YouTube Finder</div>
-      </H1>
+      <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+        <H1>
+          <FaVideo />
+          <div>YouTube Finder</div>
+        </H1>
+      </Link>
       <Ul menuIconClicked={menuIconClicked}>
         <Link to="/" style={{ textDecoration: "none" }}>
           <Li menuIconClicked={menuIconClicked}>Home</Li>

@@ -41,17 +41,15 @@ const Loader = styled.div`
 
 function VideoSection(props) {
   const { videoListId } = props;
-  console.log(videoListId);
 
   return (
     <Container>
       <VideoContainer>
         <h1>Top 10 Videos for this Channel!</h1>
         <VideoContainer>
-          {videoListId.map((videoId) => (
-            <Loader>
+          {videoListId.map((videoId, index) => (
+            <Loader key={videoId + index}>
               <Iframe
-                key={videoId}
                 src={`https://www.youtube.com/embed/${videoId}`}
                 title="YouTube video player"
                 frameBorder="0"
