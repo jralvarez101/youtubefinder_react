@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { FaVideo } from "react-icons/fa";
 import ToggleNav from "./ToggleNav";
@@ -8,9 +8,9 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #4a525e;
+  background-color: #333333;
   padding: 0px 20px;
-  color: #fcf8ec;
+  color: #eeeeee;
   position: relative;
   ${({ menuIconClicked }) =>
     menuIconClicked &&

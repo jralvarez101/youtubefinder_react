@@ -81,7 +81,8 @@ function User(props) {
     const getVideoListResults = async () => {
       setIsLoading(true);
       const videoResponse = await axios.get(
-        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelID}&maxResults=5&key=${process.env.REACT_APP_YOUTUBE_API}`
+        // `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelID}&maxResults=5&key=${process.env.REACT_APP_YOUTUBE_API}`
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelID}&maxResults=10&order=viewCount&key=${process.env.REACT_APP_YOUTUBE_API}`
       );
       const listOfVideos = videoResponse.data.items;
       console.log(listOfVideos);
