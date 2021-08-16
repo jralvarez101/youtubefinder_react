@@ -22,7 +22,7 @@ function RightColumn(props) {
   return (
     <Fragment key={channelDetailsResult?.id}>
       <ul>
-        <Li>Title: {channelDetailsResult?.title}</Li>
+        <Li>Title: {channelDetailsResult?.snippet?.title}</Li>
         <Li>ID: {channelDetailsResult?.id}</Li>
         <Li>
           Subscribers: {channelDetailsResult?.statistics?.subscriberCount}

@@ -25,7 +25,6 @@ const Button = styled.a`
 `;
 
 function LeftColumn(props) {
-  console.log("prop:", props);
   const { channelDetailsResult } = props;
 
   return (

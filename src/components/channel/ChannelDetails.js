@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import VideoSection from "../videos/VideoSection";
 import LeftColumn from "./LeftColumn";
 import RightColumn from "./RightColumn";
 import Spinner from "../layout/Spinner";
@@ -59,6 +60,7 @@ function User(props) {
   const channelID = props.match.params.channelID;
   const [channelDetailsResult, setChannelDetailsResult] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [videoListId, setVideoListId] = useState([]);
 
   // Get Search Results List
   useEffect(() => {
@@ -69,14 +71,33 @@ function User(props) {
       );
       const [firstItem] = res?.data?.items ?? [];
       setChannelDetailsResult(firstItem ?? {});
+      console.log(channelDetailsResult);
       setIsLoading(false);
     };
     getChannelDetailsResults();
   }, [channelID]);
 
-  const hasSearchResults = channelDetailsResult.length > 0;
+  useEffect(() => {
+    const getVideoListResults = async () => {
+      setIsLoading(true);
+      const videoResponse = await axios.get(
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelID}&maxResults=5&key=${process.env.REACT_APP_YOUTUBE_API}`
+      );
+      const listOfVideos = videoResponse.data.items;
+      console.log(listOfVideos);
+      const videoId = [];
+      listOfVideos.forEach((item) => {
+        videoId.push(item.id.videoId);
+      });
+      console.log(videoId);
+      setVideoListId(videoId);
+      setIsLoading(false);
+    };
 
-  console.log(hasSearchResults);
+    getVideoListResults();
+  }, [channelID]);
+
+  const hasSearchResults = channelDetailsResult.length > 0;
 
   console.log("channelDetailsResult: ", channelDetailsResult);
   return (
@@ -98,6 +119,7 @@ function User(props) {
           </Column2>
         </Card>
       </Container>
+      <VideoSection videoListId={videoListId} />
     </Fragment>
   );
 }
